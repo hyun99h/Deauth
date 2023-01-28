@@ -30,25 +30,6 @@ class RadiotapHeader :
         self.RX_flags = b'\x00\x00'
         self.Antenna_signal2 = self.Antenna_signal1
 
-# class Deauthentication :
-#     def __init__(self, ds, ts, seq) :
-#         self.Frame_control = b'\xc0\x00'
-#         self.Duration = b'\x3a\x01'
-#         self.Ds_address = ds
-#         self.Ts_address = ts
-#         self.BSS_id = self.Ts_address
-#         self.Sequence_number = pack('H', (seq % 4095) << 4)
-#         self.Fixed = b'\x07\x00'
-
-# class Authentication :
-#     def __init__(self, ds, ts, seq) :
-#         self.Frame_control = b'\xb0\x00'
-#         self.Duration = b'\x3a\x01'
-#         self.Ds_address = ds
-#         self.Ts_address = ts
-#         self.BSS_id = self.Ds_address
-#         self.Sequence_number = pack('H', (seq % 4095) << 4)
-
 class Dot11Frame :
     def __init__(self, ds, ts, seq) :
         self.Frame_control = b''
